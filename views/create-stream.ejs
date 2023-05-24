@@ -116,6 +116,61 @@
   </div>
 
   <script src="/public/js/app.js"></script>
+  <script>
+    function startStreaming() {
+      navigator.mediaDevices.getDisplayMedia()
+        .then(stream => {
+          const videoElement = document.createElement('video');
+          videoElement.srcObject = stream;
+          videoElement.autoplay = true;
+          videoElement.controls = true;
+
+          const container = document.querySelector('.container');
+          container.appendChild(videoElement);
+
+          // Stream the obtained media stream to the server
+          const streamId = 'your_stream_id'; // Replace with your stream ID
+          const mediaRecorder = new MediaRecorder(stream);
+
+          mediaRecorder.ondataavailable = event => {
+            if (event.data.size > 0) {
+              const formData = new FormData();
+              formData.append('stream', event.data, `${streamId}.webm`);
+
+              fetch(`/api/v1/streams/${streamId}`, {
+                  method: 'POST',
+                  body: formData
+                })
+                .then(response => {
+                  if (response.ok) {
+                    // Stream data sent successfully
+                  } else {
+                    console.error('Error sending stream data:', response.statusText);
+                  }
+                })
+                .catch(error => {
+                  console.error('Error sending stream data:', error);
+                });
+            }
+          };
+
+          mediaRecorder.start(1000); // Adjust the interval based on your needs
+
+          // Stop streaming and cleanup resources
+          function stopStreaming() {
+            mediaRecorder.stop();
+            stream.getTracks().forEach(track => track.stop());
+            container.removeChild(videoElement);
+          }
+
+          // Add an event listener to the window unload event
+          window.addEventListener('beforeunload', stopStreaming);
+        })
+        .catch(error => {
+          console.error('Error accessing screen sharing:', error);
+        });
+    }
+  </script>
 </body>
 
 </html>
