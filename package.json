@@ -1,0 +1,31 @@
+{
+  "name": "neuro-cloud-streaming",
+  "version": "1.0.0",
+  "description": "",
+  "main": "servers.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "stream": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zirmith/Neuro-Cloud-Streaming.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zirmith/Neuro-Cloud-Streaming/issues"
+  },
+  "homepage": "https://github.com/Zirmith/Neuro-Cloud-Streaming#readme",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "getmac": "^5.20.0",
+    "nodemon": "^2.0.22",
+    "uuid": "^9.0.0"
+  }
+}

@@ -1,0 +1,21 @@
+<!-- index.ejs -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Streaming Service</title>
+</head>
+<body>
+  <h1>Live Streams</h1>
+  <ul>
+    <% streams.forEach((stream) => { %>
+      <li>
+        <a href="/stream/<%= stream.id %>">
+          <h2><%= stream.title %></h2>
+          <p>Stream Owner: <%= stream.owner %></p>
+        </a>
+      </li>
+    <% }); %>
+  </ul>
+</body>
+</html>
