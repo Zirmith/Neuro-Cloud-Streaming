@@ -119,6 +119,7 @@ app.post('/api/v1/streams', authenticateUser, (req, res) => {
     title,
     description,
     userId: user.id,
+    owner: user.username,
     viewers: 0,
   };
 
