@@ -43,7 +43,7 @@ const authenticateUser = (req, res, next) => {
   };
   
 // Register a new user
-app.post('/signup', (req, res) => {
+app.post('/api/v1/signup', (req, res) => {
     const { username, password } = req.body;
   
     // Check if the username or password is empty or undefined
@@ -75,7 +75,7 @@ app.post('/signup', (req, res) => {
   });
   
   // Authenticate and login a user
-  app.post('/login', (req, res) => {
+  app.post('/api/v1/login', (req, res) => {
     const { username, password } = req.body;
   
     // Check if the username or password is empty or undefined
@@ -106,7 +106,7 @@ app.post('/signup', (req, res) => {
   
 
 // Create a new stream
-app.post('/streams', authenticateUser, (req, res) => {
+app.post('/api/v1/streams', authenticateUser, (req, res) => {
   const { title, description } = req.body;
   const { user } = req;
 
@@ -130,14 +130,14 @@ app.post('/streams', authenticateUser, (req, res) => {
 });
 
 // Get all streams
-app.get('/streams', (req, res) => {
+app.get('/api/v1/streams', (req, res) => {
   // Return an array of all stream objects
   const allStreams = Object.values(streams);
   res.status(200).json({ streams: allStreams });
 });
 
 // Get a specific stream
-app.get('/stream/:streamId', (req, res) => {
+app.get('/api/v1/stream/:streamId', (req, res) => {
   const { streamId } = req.params;
 
   // Check if the stream exists
@@ -151,7 +151,7 @@ app.get('/stream/:streamId', (req, res) => {
 });
 
 // Update a stream
-app.put('/stream/:streamId', authenticateUser, (req, res) => {
+app.put('/api/v1/stream/:streamId', authenticateUser, (req, res) => {
   const { streamId } = req.params;
   const { user } = req;
   const { title, description } = req.body;
@@ -171,7 +171,7 @@ app.put('/stream/:streamId', authenticateUser, (req, res) => {
 });
 
 // Delete a stream
-app.delete('/stream/:streamId', authenticateUser, (req, res) => {
+app.delete('/api/v1/stream/:streamId', authenticateUser, (req, res) => {
   const { streamId } = req.params;
   const { user } = req;
 
