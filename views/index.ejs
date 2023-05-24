@@ -136,18 +136,50 @@
                 <h2><%= stream.title %></h2>
                 <p><%= stream.description %></p>
                 <p>Owner: <%= stream.owner %></p>
-                <p>Viewers: <%= stream.viewers %></p>
+                <p class="viewers-count" data-stream-id="<%= stream.id %>">Viewers: <%= stream.viewers %></p>
                 <a href="/watch/<%= stream.id %>"><i class="fas fa-play-circle"></i> Watch</a>
                 <button class="delete-stream-button" onclick="deleteStream('<%= stream.id %>')"><i class="fas fa-trash-alt"></i> Delete</button>
               </div>
             <% }) %>
           </div>
+          
         </div>
       </div>
     </div>
   </div>
 
-  <script src="/public/js/app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  // Function to update the viewers count for a specific stream
+  function updateViewersCount(streamId, viewersCount) {
+    const viewersElement = $(`.viewers-count[data-stream-id="${streamId}"]`);
+    viewersElement.text(`Viewers: ${viewersCount}`);
+  }
+
+  // Function to periodically update the viewers count for all streams
+  function startAutoUpdate() {
+    setInterval(() => {
+      // Make an AJAX request to fetch the updated stream data
+      $.ajax({
+        url: '/api/v1/streams',
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+          // Update the viewers count for each stream
+          response.forEach((stream) => {
+            updateViewersCount(stream.id, stream.viewers);
+          });
+        },
+        error: function (error) {
+          console.error('Failed to fetch stream data:', error);
+        }
+      });
+    }, 5000); // Update every 5 seconds (adjust the interval as needed)
+  }
+
+  // Call the function to start auto-updating
+  startAutoUpdate();
+</script>
 </body>
 
 </html>
