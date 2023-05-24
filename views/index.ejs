@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neuro Cloud Streaming</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+  <nav>
+    <!-- Your navigation bar code here -->
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-bars"></i> Sidebar
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <a href="/" class="text-decoration-none">Home</a>
+              </li>
+              <li class="list-group-item">
+                <a href="/create-stream" class="text-decoration-none">Create Stream</a>
+              </li>
+              <li class="list-group-item">
+                <a href="/login" class="text-decoration-none">Login</a>
+              </li>
+              <li class="list-group-item">
+                <a href="/signup" class="text-decoration-none">Sign Up</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header">
+            <i class="fas fa-video"></i> Streams
+          </div>
+          <div class="card-body" id="stream-list">
+            <% streams.forEach((stream) => { %>
+              <div class="stream-card">
+                <h2><%= stream.title %></h2>
+                <p><%= stream.description %></p>
+                <p>Owner: <%= stream.owner %></p>
+                <p>Viewers: <%= stream.viewers %></p>
+                <a href="/watch/<%= stream.id %>">Watch</a>
+                <button class="delete-stream-button" onclick="deleteStream('<%= stream.id %>')">Delete</button>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+
+</html>
