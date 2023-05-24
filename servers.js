@@ -245,6 +245,25 @@ app.get('/', (req, res) => {
   res.render('index', { streams: streamList, user });
 });
 
+
+app.get('/create-stream', (req, res) => {
+  
+  const user = req.user; // Assuming the authenticated user object is available in req.user
+  res.render('create-stream', { user });
+});
+
+app.get('/login', (req, res) => {
+  
+  const user = req.user; // Assuming the authenticated user object is available in req.user
+  res.render('login', { user });
+});
+
+app.get('/signup', (req, res) => {
+ 
+  const user = req.user; // Assuming the authenticated user object is available in req.user
+  res.render('signup', {  user });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
