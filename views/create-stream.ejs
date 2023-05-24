@@ -5,7 +5,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neuro Cloud Streaming - Create Stream</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .col-md-6 {
+      width: 50%;
+      float: left;
+    }
+
+    .offset-md-3 {
+      margin-left: 25%;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      background-color: #f5f5f5;
+      padding: 10px;
+      font-weight: bold;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .fa {
+      margin-right: 5px;
+    }
+  </style>
 </head>
 
 <body>
@@ -23,14 +100,14 @@
           <div class="card-body">
             <form action="/api/v1/streams" method="POST">
               <div class="form-group">
-                <label for="title">Title</label>
+                <label for="title"><i class="fas fa-heading"></i> Title</label>
                 <input type="text" id="title" name="title" class="form-control" required>
               </div>
               <div class="form-group">
-                <label for="description">Description</label>
+                <label for="description"><i class="fas fa-align-left"></i> Description</label>
                 <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">Create Stream</button>
+              <button type="submit" class="btn btn-primary"><i class="fas fa-video"></i> Create Stream</button>
             </form>
           </div>
         </div>
