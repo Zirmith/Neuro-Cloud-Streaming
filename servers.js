@@ -10,6 +10,9 @@ app.use(cors());
 app.use(express.json());
 app.set('view engine', 'ejs');
 
+app.use(express.static('public'));
+
+
 const users = [];
 const streams = {};
 
@@ -237,7 +240,8 @@ app.get('/watch/:streamId', (req, res) => {
 // Render the home page with a list of streams
 app.get('/', (req, res) => {
   const streamList = Object.values(streams);
-  res.render('index', { streams: streamList });
+  const user = req.user; // Assuming the authenticated user object is available in req.user
+  res.render('index', { streams: streamList, user });
 });
 
 app.listen(port, () => {
