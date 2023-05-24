@@ -98,7 +98,7 @@
             <i class="fas fa-video"></i> Create Stream
           </div>
           <div class="card-body">
-            <form action="/api/v1/streams" method="POST">
+            <form id="createStreamForm">
               <div class="form-group">
                 <label for="title"><i class="fas fa-heading"></i> Title</label>
                 <input type="text" id="title" name="title" class="form-control" required>
@@ -117,59 +117,43 @@
 
   <script src="/public/js/app.js"></script>
   <script>
-    function startStreaming() {
-      navigator.mediaDevices.getDisplayMedia()
-        .then(stream => {
-          const videoElement = document.createElement('video');
-          videoElement.srcObject = stream;
-          videoElement.autoplay = true;
-          videoElement.controls = true;
+    document.addEventListener('DOMContentLoaded', () => {
+      const createStreamForm = document.getElementById('createStreamForm');
+      createStreamForm.addEventListener('submit', handleCreateStream);
 
-          const container = document.querySelector('.container');
-          container.appendChild(videoElement);
+      function handleCreateStream(event) {
+        event.preventDefault();
+        const titleInput = document.getElementById('title');
+        const descriptionInput = document.getElementById('description');
 
-          // Stream the obtained media stream to the server
-          const streamId = 'your_stream_id'; // Replace with your stream ID
-          const mediaRecorder = new MediaRecorder(stream);
+        const streamData = {
+          title: titleInput.value,
+          description: descriptionInput.value
+        };
 
-          mediaRecorder.ondataavailable = event => {
-            if (event.data.size > 0) {
-              const formData = new FormData();
-              formData.append('stream', event.data, `${streamId}.webm`);
+        const token = localStorage.getItem('token');
 
-              fetch(`/api/v1/streams/${streamId}`, {
-                  method: 'POST',
-                  body: formData
-                })
-                .then(response => {
-                  if (response.ok) {
-                    // Stream data sent successfully
-                  } else {
-                    console.error('Error sending stream data:', response.statusText);
-                  }
-                })
-                .catch(error => {
-                  console.error('Error sending stream data:', error);
-                });
+        fetch('/api/v1/streams', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(streamData)
+          })
+          .then(response => {
+            if (response.ok) {
+              // Stream created successfully
+              window.location = "/"
+            } else {
+              console.error('Error creating stream:', response.statusText);
             }
-          };
-
-          mediaRecorder.start(1000); // Adjust the interval based on your needs
-
-          // Stop streaming and cleanup resources
-          function stopStreaming() {
-            mediaRecorder.stop();
-            stream.getTracks().forEach(track => track.stop());
-            container.removeChild(videoElement);
-          }
-
-          // Add an event listener to the window unload event
-          window.addEventListener('beforeunload', stopStreaming);
-        })
-        .catch(error => {
-          console.error('Error accessing screen sharing:', error);
-        });
-    }
+          })
+          .catch(error => {
+            console.error('Error creating stream:', error);
+          });
+      }
+    });
   </script>
 </body>
 
