@@ -147,10 +147,12 @@
               window.location.href = '/';
             } else {
               console.error('Login failed:', data);
+                alert(data[0].message)
             }
           })
           .catch(error => {
             console.error('Login failed:', error);
+alert(data[0].message)
           });
       }
     });
