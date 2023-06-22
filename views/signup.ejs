@@ -147,10 +147,12 @@
               window.location.href = '/';
             } else {
               console.error('Signup failed:', data);
+alert(data[0].message)
             }
           })
           .catch(error => {
             console.error('Signup failed:', error);
+alert(data[0].message)
           });
       }
     });
