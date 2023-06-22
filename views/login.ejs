@@ -117,6 +117,44 @@
 
   <script src="/public/js/app.js"></script>
 
+ <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.querySelector('form');
+      form.addEventListener('submit', handleSignUp);
+  
+      function handleSignUp(event) {
+        event.preventDefault();
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+  
+        const userData = {
+          username: usernameInput.value,
+          password: passwordInput.value
+        };
+  
+        fetch('/api/v1/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data && data.user && data.user.token) {
+              localStorage.setItem('token', data.user.token);
+              // Redirect to the desired page
+              window.location.href = '/';
+            } else {
+              console.error('Login failed:', data);
+            }
+          })
+          .catch(error => {
+            console.error('Login failed:', error);
+          });
+      }
+    });
+  </script>
   
 
 </body>
